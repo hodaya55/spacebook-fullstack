@@ -17,4 +17,5 @@ comments: [commentSchema]
 
 let Post = mongoose.model('post', postSchema)
 
-module.exports = Post
+module.exports = Post;
+
