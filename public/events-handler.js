@@ -7,6 +7,8 @@ class EventsHandler {
 
     registerAddPost() {
         $('#addpost').on('click keyup', (event) => {
+            console.log('in registerAddPost event:');
+
             event.preventDefault();
             if (event.keyCode === 13 || event.type === 'click') {
                 let $input = $("#postText");
@@ -23,6 +25,8 @@ class EventsHandler {
 
     registerRemovePost() {
         this.$posts.on('click', '.remove-post', (event) => {
+            console.log('in registerRemovePost event:');
+
             let index = $(event.currentTarget).closest('.post').index();;
             this.postsRepository.removePost(index);
             this.postsRenderer.renderPosts(this.postsRepository.posts);
@@ -39,6 +43,8 @@ class EventsHandler {
 
     registerAddComment() {
         this.$posts.on('click', '.add-comment', (event) => {
+            console.log('in registerAddComment event:');
+
             let $comment = $(event.currentTarget).siblings('.comment');
             let $user = $(event.currentTarget).siblings('.name');
 
@@ -60,6 +66,8 @@ class EventsHandler {
 
     registerRemoveComment() {
         this.$posts.on('click', '.remove-comment', (event) => {
+            console.log('in registerRemoveComment event:');
+
             let $commentsList = $(event.currentTarget).closest('.post').find('.comments-list');
             let postIndex = $(event.currentTarget).closest('.post').index();
             let commentIndex = $(event.currentTarget).closest('.comment').index();

@@ -9,6 +9,8 @@ class PostsRenderer {
     }
 
     renderPosts(posts) {
+        console.log('in renderPosts');
+
         this.$posts.empty();
         let template = Handlebars.compile(this.$postTemplate);
         for (let i = 0; i < posts.length; i++) {
@@ -20,12 +22,15 @@ class PostsRenderer {
     }
 
     renderComments(posts, postIndex) {
+        console.log('in renderComments');
+
         let post = $(".post")[postIndex];
         let $commentsList = $(post).find('.comments-list');
         $commentsList.empty();
         let template = Handlebars.compile(this.$commentTemplate);
         for (let i = 0; i < posts[postIndex].comments.length; i++) {
           let newHTML = template(posts[postIndex].comments[i]);
+          console.log(newHTML);
           $commentsList.append(newHTML);
         }
     }
