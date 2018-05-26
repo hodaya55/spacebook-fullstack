@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // 1) to handle getting all posts and their comments
 app.get('/posts', (req, res) => {
-  // reads the data of posts from the db and send it as a respone
+  // reads the data of posts from the db and send it as a respone to the client
   Post.find(function (error, posts) {
     if (error)
       return console.error(error);
@@ -41,10 +41,26 @@ app.get('/posts', (req, res) => {
 });
 
 // 2) to handle adding a post
+//When requested by a client, the route needs to take the data supplied by the client and from it create a new post.
+app.post('/posts', (req, res) => {
+  console.log('in app.post, req.body:');
+  var newPost = new Post(req.body);
+  console.log(newPost);
+  newPost.save();
+  res.send(newPost);
+});
 
 
 // 3) to handle deleting a post
+//Once the server has deleted the post it should notify the client
+app.delete('/delete:id', (req, res) => {
+  Post.findByIdAndRemove(req.params.id, (err) => {
+    if (err)
+      return console.error(err);
+  });
 
+  res.send('remove successfully');
+})
 
 // 4) to handle adding a comment to a post
 
