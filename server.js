@@ -43,7 +43,7 @@ app.get('/posts', (req, res) => {
 // 2) to handle adding a post
 //When requested by a client, the route needs to take the data supplied by the client and from it create a new post.
 app.post('/posts', (req, res) => {
-  console.log('in app.post, req.body:');
+  console.log('in app.post:');
   var newPost = new Post(req.body);
   console.log(newPost);
   newPost.save();
@@ -53,13 +53,13 @@ app.post('/posts', (req, res) => {
 
 // 3) to handle deleting a post
 //Once the server has deleted the post it should notify the client
-app.delete('/delete:id', (req, res) => {
+app.delete('/posts/:id', (req, res) => {
+  console.log(req.params.id);
   Post.findByIdAndRemove(req.params.id, (err) => {
     if (err)
       return console.error(err);
+    res.send('remove successfully');
   });
-
-  res.send('remove successfully');
 })
 
 // 4) to handle adding a comment to a post

@@ -8,21 +8,15 @@ class PostsRepository {
 
     addPost(postText) {
         console.log('in AddPost:');
-
-        // is it ok to do this? because it doesnt recognise "this.posts or posts"
-        var postArray = this.posts;
-        // this.posts.push({ text: postText, comments: [] });
-
         //After a new post has been created in the DB it should be returned to the client
         //where (in the AJAX success handler) you can push it to the posts array and render the posts.
         $.ajax({
             method: 'post',
             url: '/posts',
             data: { text: postText, comments: [] },
-            success: function (newPost) {
+            success: (newPost) => {
                 console.log("postText: " + postText);
-                postArray.push(newPost);
-
+                this.posts.push(newPost);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
@@ -30,21 +24,18 @@ class PostsRepository {
         });
     }
 
-    removePost(index) {
+    // removePost(index) {
+    removePost(index, id) {
         console.log('in removePost:');
-
-        this.posts.splice(index, 1);
-
-        var id = '????';
-
-        //writing an delete request to that route - but you'll need to somehow include the post's ID as part of the requested route.
+        console.log("id: " + id);
+        //delete request to that route
         $.ajax({
             method: 'DELETE',
-            url: '/delete:' + id,
-            // data: ,
-            // dataType: '',
-            success: function (data) {
-                console.log(data);
+            url: '/posts/' + id,
+            success: (result)=> {
+                console.log(result);
+                if (result == 'remove successfully')
+                    this.posts.splice(index, 1);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
