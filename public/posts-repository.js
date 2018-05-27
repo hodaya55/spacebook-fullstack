@@ -27,7 +27,7 @@ class PostsRepository {
     // removePost(index) {
     removePost(index, id) {
         console.log('in removePost:');
-        console.log("id: " + id);
+        console.log("id: "+ id);
         //delete request to that route
         $.ajax({
             method: 'DELETE',
