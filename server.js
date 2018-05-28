@@ -26,16 +26,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // var post_2= new Post({text:'my second post!', comments:[{text:"comment 1 !!", user:"roni"}, {text:"comment 2 !!", user:"adi"}]});
 // post_2.save();
 
-// You will need to create 5 server routes
-// These will define your API:
+
+// we created 5 server routes
+// These define our API:
 
 // 1) to handle getting all posts and their comments
 app.get('/posts', (req, res) => {
   // reads the data of posts from the db and send it as a respone to the client
   Post.find(function (error, posts) {
     if (error)
-      return console.error(error);
-    console.log(posts); //log here in the console
+      // return console.error(error);
+      throw err;
+    console.log(posts); //log here in the console all the posts
     res.send(posts);
   });
 });
@@ -43,30 +45,56 @@ app.get('/posts', (req, res) => {
 // 2) to handle adding a post
 //When requested by a client, the route needs to take the data supplied by the client and from it create a new post.
 app.post('/posts', (req, res) => {
-  console.log('in app.post:');
-  var newPost = new Post(req.body);
-  console.log(newPost);
-  newPost.save();
-  res.send(newPost);
+  var newPostDB = new Post(req.body);
+  newPostDB.save((err, post) => {
+    if (err)
+      throw err;
+    res.send(newPostDB);
+  });
 });
 
 
 // 3) to handle deleting a post
 //Once the server has deleted the post it should notify the client
 app.delete('/posts/:id', (req, res) => {
-  console.log(req.params.id);
   Post.findByIdAndRemove(req.params.id, (err) => {
     if (err)
-      return console.error(err);
-    res.send('remove successfully');
+      // return console.error(err);
+      throw err;
+    res.send('post removed successfully');
   });
 })
 
 // 4) to handle adding a comment to a post
+app.post('/posts/:idPost/comments', (req, res) => {
+  Post.findByIdAndUpdate(req.params.idPost, { $push: { comments: req.body } }, { new: true }, (err, updatedPost) => {
+    if (err)
+      // return console.error(err);
+      throw err;
+    res.send(updatedPost);
+  });
 
+  // Post.findById(req.params.idPost, (err, postDoc) => {
+  //   console.log(req.body);
+
+  //   postDoc.comments.push(req.body);
+  //   postDoc.save(function (err, data) {
+  //     if (err)
+  //     return console.error(err);
+  //     console.log(data);
+  //     res.send(data);
+  //   })
+  // });
+});
 
 // 5) to handle deleting a comment from a post
-
+app.delete('/posts/:idPost/comments/:idComment', (req, res) => {
+  Post.findByIdAndUpdate(req.params.idPost, { $pull: { comments: { _id: req.params.idComment } } }, { new: true }, (err, updatedPost) => {
+    if (err)
+      throw err;
+    res.send('comment removed successfully');
+  });
+});
 
 
 

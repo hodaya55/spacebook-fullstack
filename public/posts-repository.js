@@ -8,14 +8,14 @@ class PostsRepository {
 
     addPost(postText) {
         console.log('in AddPost:');
-        //After a new post has been created in the DB it should be returned to the client
-        //where (in the AJAX success handler) you can push it to the posts array and render the posts.
-        $.ajax({
+        return $.ajax({
             method: 'post',
             url: '/posts',
             data: { text: postText, comments: [] },
+            //After a new post has been created in the DB it should be returned to the client
             success: (newPost) => {
                 console.log("postText: " + postText);
+                // adding the post to posts array
                 this.posts.push(newPost);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -24,18 +24,16 @@ class PostsRepository {
         });
     }
 
-    // removePost(index) {
     removePost(index, id) {
         console.log('in removePost:');
-        console.log("id: "+ id);
-        //delete request to that route
-        $.ajax({
+        //delete request to the server
+        return $.ajax({
             method: 'DELETE',
             url: '/posts/' + id,
-            success: (result)=> {
+            success: (result) => {
                 console.log(result);
-                if (result == 'remove successfully')
-                    this.posts.splice(index, 1);
+                // deleting the post from posts array
+                this.posts.splice(index, 1);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
@@ -45,15 +43,51 @@ class PostsRepository {
 
     addComment(newComment, postIndex) {
         console.log('in addComment');
-
-        this.posts[postIndex].comments.push(newComment);
+        var idPost = this.posts[postIndex]._id;
+        return $.ajax({
+            method: 'POST',
+            url: '/posts/' + idPost + '/comments',
+            data: newComment,
+            //After a new comment has been created in the DB it should be returned to the client
+            success: (updatedPost) => {
+                console.log("updatedPost: ");
+                console.log(updatedPost);
+                // adding the comment to posts array
+                this.posts[postIndex].comments.push(updatedPost.comments[updatedPost.comments.length - 1]);
+            },
+            // success: (newCommentDB) => {
+            //     console.log("newCommentDB: ");
+            //     console.log(newCommentDB);
+            //     // adding the comment to posts array
+            //     this.posts[postIndex].comments.push(newCommentDB);
+            // },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus);
+            }
+        });
     };
+
 
     deleteComment(postIndex, commentIndex) {
         console.log('in deleteComment');
 
-        this.posts[postIndex].comments.splice(commentIndex, 1);
+        var idPost = this.posts[postIndex]._id;
+        var idComment = this.posts[postIndex].comments[commentIndex]._id;
+        //delete request to the server
+        return $.ajax({
+            method: 'DELETE',
+            url: '/posts/' + idPost + '/comments/' + idComment,
+            success: (result) => {
+                console.log(result);
+                //deleting the comment from posts array
+                this.posts[postIndex].comments.splice(commentIndex, 1);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus);
+            }
+        });
     };
+
 }
 
 export default PostsRepository
