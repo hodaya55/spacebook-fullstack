@@ -17,6 +17,7 @@ class PostsRepository {
                 console.log("postText: " + postText);
                 // adding the post to posts array
                 this.posts.push(newPost);
+                // this.posts.unshift(newPost);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
@@ -53,7 +54,12 @@ class PostsRepository {
                 console.log("updatedPost: ");
                 console.log(updatedPost);
                 // adding the comment to posts array
-                this.posts[postIndex].comments.push(updatedPost.comments[updatedPost.comments.length - 1]);
+                if (updatedPost.comments.length == 0)
+                    this.posts[postIndex].comments.push(updatedPost.comments[0]);
+
+                else
+                    this.posts[postIndex].comments.push(updatedPost.comments[updatedPost.comments.length - 1]);
+                    // this.posts[postIndex].comments.unshift(updatedPost.comments[updatedPost.comments.length - 1]);
             },
             // success: (newCommentDB) => {
             //     console.log("newCommentDB: ");
