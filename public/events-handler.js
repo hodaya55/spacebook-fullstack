@@ -110,6 +110,8 @@ class EventsHandler {
 
       registerUpdatePostText() {
         this.$posts.on('click', '#editPostButton', (event) => {
+            console.log('in editpostbutton event click');
+
           let postIndex = $(event.currentTarget).closest('.post').index();
           let $clickedPost = $(event.currentTarget).closest('.post');
           let inputText = $clickedPost.find('#edit-post-input').val();
@@ -117,7 +119,8 @@ class EventsHandler {
           if (inputText === '') {
             alert('Please enter text for the post!');
             return;
-          } else {
+          }
+          else {
             this.postsRepository.updatePost(postIndex, inputText).then(() => {
               this.postsRenderer.renderPosts(this.postsRepository.posts);
             }).catch(() => { console.log('catch- error in update post-text function');});

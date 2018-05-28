@@ -83,8 +83,8 @@ optional
 // 6)  to handle editing a post
 app.put('/posts/:postId', (req, res) => {
   var id = req.params.postId;
-  // update the post in the DB collection
-  Post.findByIdAndUpdate(id, { $set: { text: req.body } }, { new: true }, (err, updatedPost) => {
+  // update the text of post in the DB collection
+  Post.findByIdAndUpdate(id, { $set: { text: req.body.text } }, { new: true }, (err, updatedPost) => {
     if (err)
       throw err;
     console.log(updatedPost);
