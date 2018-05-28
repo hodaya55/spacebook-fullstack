@@ -32,6 +32,17 @@ body {
     /* width: 671px; */
 }
 
+.post .edit-post-icon {
+    color: #14b16d;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.edit-post-form,
+.edit-comment-form {
+    display: none;
+}
+
 /*comment*/
 
 .comments-container {
@@ -75,7 +86,12 @@ body {
     border-width: 8px;
 }
 
+.comments-list{
+    margin-top: 10px;
+}
+
 .fa-trash {
-    font-size: 18px;
+    font-size: 20px;
     color: red;
+    cursor: pointer;
 }

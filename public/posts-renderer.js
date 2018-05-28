@@ -2,11 +2,13 @@
  * @class Responsible for rendering posts and comments in the HTML
  */
 
+const TODAY = new Date(); // today
+let date2 = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 2);
 
-var daysBetween = function (date1_ms, date2_ms) {   //Get 1 day in milliseconds
-  var one_day = 1000 * 60 * 60 * 24;    // Convert both dates to milliseconds
-  var difference_ms = date2_ms - date1_ms; // Convert back to days and return
-  return Math.round(difference_ms / one_day);
+var daysBetween = function (date1_ms, date2_ms) {
+  var one_day = 1000 * 60 * 60 * 24;
+  var difference_ms = date2_ms - date1_ms; // Convert both dates to milliseconds
+  return Math.round(difference_ms / one_day); // Convert back to days and return
 }
 
 class PostsRenderer {
@@ -22,6 +24,8 @@ class PostsRenderer {
     this.$posts.empty();
     let template = Handlebars.compile(this.$postTemplate);
     for (let i = 0; i < posts.length; i++) {
+      // set the numbers of comments of each post
+      posts[i].numOfComments = posts[i].comments.length;
       let newHTML = template(posts[i]);
       //   console.log(newHTML);
       this.$posts.append(newHTML);
@@ -39,14 +43,10 @@ class PostsRenderer {
     $commentsList.empty();
     let template = Handlebars.compile(this.$commentTemplate);
     for (let i = 0; i < posts[postIndex].comments.length; i++) {
-      let d = new Date(); // today
       let commentDate = posts[postIndex].comments[i].createDate;
-      let date2 = new Date(d.getFullYear(), d.getMonth(), d.getDate() +2);
-      // var dayDifference = daysBetween(commentDate, d.getTime());
-      // posts[postIndex].comments[i].day = dayDifference;
       // calculate the days between date of comment and the date today
       posts[postIndex].comments[i].day = daysBetween(commentDate, date2.getTime());
-
+      // posts[postIndex].comments[i].day = daysBetween(commentDate, TODAY.getTime());
       let newHTML = template(posts[postIndex].comments[i]);
       //   console.log(newHTML);
       $commentsList.append(newHTML);

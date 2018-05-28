@@ -32,48 +32,52 @@
 
 
     <script id="post-template" type="text/x-handlebars-template">
-            <div class="post" data-id="{{_id}}">
-                <div class="post-line">
-                    {{text}}
-                    <a role="button" class="remove-post">
-                        <i class="fa fa-trash"></i>
-                </a>
+        <div class="post" data-id="{{_id}}">
+            <div class="post-line">
+                <p class="post-text">{{text}}</p>
+
+                <div class="edit-post-form">
+                    <input class="form-control" type="text" id="edit-post-input" />
+                    <button type="button" id="editPostButton" class="btn btn-success btn-sm">Save Changes</button>
+                    <button type="button" id="cancelEditPost" class="btn btn-outline-dark btn-sm">Cancel</button>
                 </div>
-                <br>
-                <a class="toggle-comments" href="#"> Comments </a>
-                <br>
-                <div class="comments-container">
-                    <ul class="comments-list"></ul>
-                    <input class="form-control name" type="text"
-                        placeholder="Name" />
-                    <input class="form-control comment" type="text"
-                        placeholder="Comment"
-                    />
-                    <button type="button" class="btn btn-sm btn-primary add-comment">Post Comment</button>
-                </div>
+
+                <span class="icons">
+                    <i class="fa fa-trash remove-post"></i>
+                    <i class="fa fa-edit edit-post-icon"></i>
+                </span>
             </div>
-        </script>
+
+            <br>
+            <a class="toggle-comments" href="#"> {{numOfComments}} Comments </a>
+
+
+            <div class="comments-container">
+                <ul class="comments-list"></ul>
+                <input class="form-control name" type="text" placeholder="Name" />
+                <input class="form-control comment" type="text" placeholder="Comment" />
+                <button type="button" class="btn btn-sm btn-primary add-comment">Post Comment</button>
+            </div>
+        </div>
+    </script>
 
     <script id="comment-template" type="text/x-handlebars-template">
-            <div class="row">
-                <!-- <div class="col-sm-5"> -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <strong>{{user}}</strong> <span class="text-muted"> commented {{day}} days ago</span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="comment" data-id="{{_id}}">
-                            {{text}}
-                            <a role="button" class="remove-comment">
-                               <i class="fa fa-trash"></i>
-                           </a>
-                        </div>
-                    </div>
-                    <!-- /panel-body -->
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>{{user}}</strong>
+                    <span class="text-muted"> commented {{day}} days ago</span>
                 </div>
-                <!-- /panel panel-default -->
-                <!-- </div>/col-sm-5 -->
-        </script>
+                <div class="panel-body">
+                    <div class="comment" data-id="{{_id}}">
+                        {{text}}
+                        <a role="button" class="remove-comment">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+    </script>
 
     <script src="jquery/dist/jquery.js"></script>
     <script src="handlebars/dist/handlebars.js"></script>
