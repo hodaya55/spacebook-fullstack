@@ -45,6 +45,7 @@ app.get('/posts', (req, res) => {
 // 2) to handle adding a post
 //When requested by a client, the route needs to take the data supplied by the client and from it create a new post.
 app.post('/posts', (req, res) => {
+
   var newPostDB = new Post(req.body);
   newPostDB.save((err, post) => {
     if (err)
@@ -67,6 +68,7 @@ app.delete('/posts/:id', (req, res) => {
 
 // 4) to handle adding a comment to a post
 app.post('/posts/:idPost/comments', (req, res) => {
+
   Post.findByIdAndUpdate(req.params.idPost, { $push: { comments: req.body } }, { new: true }, (err, updatedPost) => {
     if (err)
       // return console.error(err);

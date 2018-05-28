@@ -53,10 +53,12 @@ class PostsRepository {
             success: (updatedPost) => {
                 console.log("updatedPost: ");
                 console.log(updatedPost);
+                console.log("newComment: ");
+                console.log(newComment);
+
                 // adding the comment to posts array
                 if (updatedPost.comments.length == 0)
                     this.posts[postIndex].comments.push(updatedPost.comments[0]);
-
                 else
                     this.posts[postIndex].comments.push(updatedPost.comments[updatedPost.comments.length - 1]);
                     // this.posts[postIndex].comments.unshift(updatedPost.comments[updatedPost.comments.length - 1]);

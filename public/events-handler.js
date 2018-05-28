@@ -14,12 +14,12 @@ class EventsHandler {
                 let $input = $("#postText");
                 if ($input.val() === "") {
                     alert("Please enter text!");
-                } else {
+                }
+                else {
                     this.postsRepository.addPost($input.val()).then(() => {
                         this.postsRenderer.renderPosts(this.postsRepository.posts);
                         $input.val("");
-                    });
-
+                    }).catch(() => {console.log('catch- error in adding post function');});
                 }
             }
         });
@@ -59,14 +59,28 @@ class EventsHandler {
                 return;
             }
 
+            let d=new Date();
+            console.log(d);
+
+            // let day =d.getDate()-1 + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+            let year= d.getFullYear()
+            let month= (d.getMonth() + 1)
+            let day= d.getDate()-1;
+
+            console.log("date "+ day);
+
             let postIndex = $(event.currentTarget).closest('.post').index();
-            let newComment = { text: $comment.val(), user: $user.val() };
+            // let newComment = { text: $comment.val(), user: $user.val() };
+            // let newComment = { text: $comment.val(), createDate:{year,month,day} ,user: $user.val() };
+            let newComment = { text: $comment.val(), createDate:d.getTime() ,user: $user.val() };
+
+            console.log(newComment);
 
             this.postsRepository.addComment(newComment, postIndex).then(() => {
                 this.postsRenderer.renderComments(this.postsRepository.posts, postIndex);
                 $comment.val("");
                 $user.val("");
-            });
+            }).catch(() => {console.log('catch- error in adding comment function');});
         });
 
     }

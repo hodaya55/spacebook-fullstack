@@ -19,11 +19,9 @@
                 <form class="post-form">
                     <h3>Add a New Post</h3>
                     <div class="form-group">
-                        <textarea cols="40" rows="5" class="form-control" type="text" id="postText" placeholder="Enter Post Text"> </textarea>
-                    <button type="submit" id="addpost" class="btn btn-primary">Post</button>
-
+                        <textarea class="form-control" type="text" id="postText" placeholder="Enter Post Text"> </textarea>
+                        <button type="submit" id="addpost" class="btn btn-primary">Post</button>
                     </div>
-                    <!-- <button type="submit" id="addpost" class="btn btn-primary">Post</button> -->
                     <br>
                 </form>
                 <div class="posts"></div>
@@ -34,50 +32,48 @@
 
 
     <script id="post-template" type="text/x-handlebars-template">
-        <div class="post"  data-id="{{_id}}">
-            <!-- <div class="post-line">  -->
-                {{text}}
-                <a role="button" class="remove-post">
+            <div class="post" data-id="{{_id}}">
+                <div class="post-line">
+                    {{text}}
+                    <a role="button" class="remove-post">
                         <i class="fa fa-trash"></i>
                 </a>
-            <br>
-        <!-- </div> -->
-        <a class="toggle-comments" href="#"> Comments </a>
-
-            <div class="comments-container">
-                <ul class="comments-list"></ul>
-                <input class="form-control name" type="text" placeholder="Name" />
-                <input class="form-control comment" type="text" placeholder="Comment" />
-                <button type="button" class="btn btn-sm btn-primary add-comment">Post Comment</button>
+                </div>
+                <br>
+                <a class="toggle-comments" href="#"> Comments </a>
+                <br>
+                <div class="comments-container">
+                    <ul class="comments-list"></ul>
+                    <input class="form-control name" type="text"
+                        placeholder="Name" />
+                    <input class="form-control comment" type="text"
+                        placeholder="Comment"
+                    />
+                    <button type="button" class="btn btn-sm btn-primary add-comment">Post Comment</button>
+                </div>
             </div>
-        </div>
-    </script>
+        </script>
 
     <script id="comment-template" type="text/x-handlebars-template">
-        <div class="row">
-
-            <!-- <div class="col-sm-5"> -->
-            <div class="panel panel-default">
-            <div class="panel-heading">
-            <strong>{{user}}</strong> <span class="text-muted">commented {{day}} days ago</span>
-            </div>
-            <div class="panel-body">
-            <div class="comment" data-id="{{_id}}">
-                {{text}}
-                <a role="button" class="remove-comment">
-                    <i class="fa fa-trash"></i>
-                </a>
-
-            </div>
-
-            </div><!-- /panel-body -->
-            </div><!-- /panel panel-default -->
-            <!-- </div>/col-sm-5 -->
-<!--
-        <li class="comment" data-id="{{_id}}">{{text}} - {{user}}
-            <button type="button" class="btn btn-sm btn-danger remove-comment">Remove Comment</button>
-        </li> -->
-    </script>
+            <div class="row">
+                <!-- <div class="col-sm-5"> -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>{{user}}</strong> <span class="text-muted"> commented {{day}} days ago</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="comment" data-id="{{_id}}">
+                            {{text}}
+                            <a role="button" class="remove-comment">
+                               <i class="fa fa-trash"></i>
+                           </a>
+                        </div>
+                    </div>
+                    <!-- /panel-body -->
+                </div>
+                <!-- /panel panel-default -->
+                <!-- </div>/col-sm-5 -->
+        </script>
 
     <script src="jquery/dist/jquery.js"></script>
     <script src="handlebars/dist/handlebars.js"></script>
