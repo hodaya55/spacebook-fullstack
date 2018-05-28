@@ -103,10 +103,15 @@ class EventsHandler {
           let textPost = $clickedPost.find('.post-text').text();
           $clickedPost.find('.comments-container').removeClass('show');
           $clickedPost.find('.edit-post-form').toggleClass('show');
-          $clickedPost.find('#edit-post-input').val(textPost);
+        //   $clickedPost.find('#edit-post-input').val(textPost);
+          $clickedPost.find('.post-text').prop("disabled", false);
+        //   document.getElementById('elementId').removeAttribute('disabled');
         });
       }
 
+      /*=====================================================
+      לתקן שאחרי קנסל זה לא ישמור !! זה שומר בכל זאת...
+      =======================================================*/
 
       registerUpdatePostText() {
         this.$posts.on('click', '#editPostButton', (event) => {
@@ -114,7 +119,7 @@ class EventsHandler {
 
           let postIndex = $(event.currentTarget).closest('.post').index();
           let $clickedPost = $(event.currentTarget).closest('.post');
-          let inputText = $clickedPost.find('#edit-post-input').val();
+          let inputText = $clickedPost.find('.post-text').val();
 
           if (inputText === '') {
             alert('Please enter text for the post!');

@@ -34,10 +34,10 @@
     <script id="post-template" type="text/x-handlebars-template">
         <div class="post" data-id="{{_id}}">
             <div class="post-line">
-                <p class="post-text">{{text}}</p>
+                <textarea type="text" class="post-text"  disabled> {{text}}</textarea>
 
                 <div class="edit-post-form">
-                    <input class="form-control" type="text" id="edit-post-input" />
+                    <!-- <input class="form-control" type="text" id="edit-post-input" /> -->
                     <button type="button" id="editPostButton" class="btn btn-success btn-sm">Save Changes</button>
                     <button type="button" id="cancelEditPost" class="btn btn-outline-dark btn-sm">Cancel</button>
                 </div>
