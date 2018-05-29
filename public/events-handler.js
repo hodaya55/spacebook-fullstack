@@ -108,8 +108,10 @@ class EventsHandler {
             $clickedPost.find('.post-text').val(textPost);
             textPostOrigin = textPost; //save the original post text, in case user cancel his edit
             $clickedPost.find('.post-text').toggleClass('white');
-            $clickedPost.find('.post-text').prop("disabled", false);
-
+            if ($clickedPost.find('.post-text').hasClass('white'))
+                $clickedPost.find('.post-text').prop("disabled", false);
+            else
+                $clickedPost.find('.post-text').prop("disabled", true);
         });
     }
 
@@ -121,12 +123,15 @@ class EventsHandler {
             let $clickedPost = $(event.currentTarget).closest('.post');
             let inputText = $clickedPost.find('.post-text').val();
 
+
             if (inputText === '') {
                 alert('Please enter text for the post!');
                 return;
             }
             else {
                 this.postsRepository.updatePost(postIndex, inputText).then(() => {
+                    $clickedPost.find('.post-text').prop("disabled", true);
+
                     this.postsRenderer.renderPosts(this.postsRepository.posts);
                 }).catch(() => { console.log('catch- error in update post-text function'); });
             }
@@ -141,6 +146,9 @@ class EventsHandler {
                 console.log('in cancel edit post');
                 $clickedPost.find('.edit-post-form').toggleClass('show');
                 $clickedPost.find('.post-text').val(textPostOrigin);
+                $clickedPost.find('.post-text').prop("disabled", true);
+                $clickedPost.find('.post-text').toggleClass('white');
+
             }
             else { // if update comment was canceled
                 let $clickedComment = $(event.currentTarget).closest('.comment');

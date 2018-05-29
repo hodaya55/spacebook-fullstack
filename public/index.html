@@ -34,7 +34,8 @@
     <script id="post-template" type="text/x-handlebars-template">
         <div class="post" data-id="{{_id}}">
             <div class="post-line">
-                <textarea type="text" class="post-text"  disabled> {{text}}</textarea>
+                <textarea type="text" class="post-text"  id="textareaedit" disabled contenteditable="true"> {{text}}</textarea>
+                <!-- <p type="text" class="post-text" > {{text}}</p> -->
 
                 <div class="edit-post-form">
                     <!-- <input class="form-control" type="text" id="edit-post-input" /> -->

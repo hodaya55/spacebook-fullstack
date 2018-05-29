@@ -42,3 +42,4 @@ var getPosts = function () {
 //invoke this client-side function when the app loads
 //in order to display all posts as soon as page loads
 getPosts();
+
