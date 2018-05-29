@@ -140,10 +140,8 @@ class EventsHandler {
             // if update post was canceled
             if ($(event.currentTarget)[0].id == 'cancelEditPost') {
                 console.log('in cancel edit post');
-
                 $clickedPost.find('.edit-post-form').toggleClass('show');
                 $clickedPost.find('.post-text').val(textPostOrigin);
-
             }
             else { // if update comment was canceled
                 let $clickedComment = $(event.currentTarget).closest('.comment');
