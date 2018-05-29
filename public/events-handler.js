@@ -117,7 +117,6 @@ class EventsHandler {
     registerUpdatePostText() {
         this.$posts.on('click', '#editPostButton', (event) => {
             console.log('in editpostbutton event click');
-
             let postIndex = $(event.currentTarget).closest('.post').index();
             let $clickedPost = $(event.currentTarget).closest('.post');
             let inputText = $clickedPost.find('.post-text').val();
