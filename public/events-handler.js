@@ -1,3 +1,5 @@
+var textPostOrigin = "";
+
 class EventsHandler {
     constructor(postsRepository, postsRenderer) {
         this.postsRepository = postsRepository;
@@ -99,52 +101,53 @@ class EventsHandler {
 
     registerToggleUpdatePost() {
         this.$posts.on('click', '.edit-post-icon', (event) => {
-          let $clickedPost = $(event.currentTarget).closest('.post');
-          let textPost = $clickedPost.find('.post-text').text();
-          $clickedPost.find('.comments-container').removeClass('show');
-          $clickedPost.find('.edit-post-form').toggleClass('show');
-        //   $clickedPost.find('#edit-post-input').val(textPost);
-          $clickedPost.find('.post-text').prop("disabled", false);
-        //   document.getElementById('elementId').removeAttribute('disabled');
+            let $clickedPost = $(event.currentTarget).closest('.post');
+            let textPost = $clickedPost.find('.post-text').text();
+            $clickedPost.find('.comments-container').removeClass('show');
+            $clickedPost.find('.edit-post-form').toggleClass('show');
+            $clickedPost.find('.post-text').val(textPost);
+            textPostOrigin = textPost; //save the original post text, in case user cancel his edit
+            $clickedPost.find('.post-text').toggleClass('white');
+            $clickedPost.find('.post-text').prop("disabled", false);
+
         });
-      }
+    }
 
-      /*=====================================================
-      לתקן שאחרי קנסל זה לא ישמור !! זה שומר בכל זאת...
-      =======================================================*/
 
-      registerUpdatePostText() {
+    registerUpdatePostText() {
         this.$posts.on('click', '#editPostButton', (event) => {
             console.log('in editpostbutton event click');
+            let postIndex = $(event.currentTarget).closest('.post').index();
+            let $clickedPost = $(event.currentTarget).closest('.post');
+            let inputText = $clickedPost.find('.post-text').val();
 
-          let postIndex = $(event.currentTarget).closest('.post').index();
-          let $clickedPost = $(event.currentTarget).closest('.post');
-          let inputText = $clickedPost.find('.post-text').val();
-
-          if (inputText === '') {
-            alert('Please enter text for the post!');
-            return;
-          }
-          else {
-            this.postsRepository.updatePost(postIndex, inputText).then(() => {
-              this.postsRenderer.renderPosts(this.postsRepository.posts);
-            }).catch(() => { console.log('catch- error in update post-text function');});
-          }
+            if (inputText === '') {
+                alert('Please enter text for the post!');
+                return;
+            }
+            else {
+                this.postsRepository.updatePost(postIndex, inputText).then(() => {
+                    this.postsRenderer.renderPosts(this.postsRepository.posts);
+                }).catch(() => { console.log('catch- error in update post-text function'); });
+            }
         });
-      }
+    }
 
-      registerCancelUpdates() {
+    registerCancelUpdates() {
         this.$posts.on('click', '#cancelEditPost, #cancelEditComment', (event) => {
-          let $clickedPost = $(event.currentTarget).closest('.post');
-          // if update post was canceled
-          if ($(event.currentTarget)[0].id == 'cancelEditPost') {
-            $clickedPost.find('.edit-post-form').toggleClass('show');
-          } else { // if update comment was canceled
-            let $clickedComment = $(event.currentTarget).closest('.comment');
-            $clickedComment.find('.edit-comment-form').toggleClass('show');
-          }
+            let $clickedPost = $(event.currentTarget).closest('.post');
+            // if update post was canceled
+            if ($(event.currentTarget)[0].id == 'cancelEditPost') {
+                console.log('in cancel edit post');
+                $clickedPost.find('.edit-post-form').toggleClass('show');
+                $clickedPost.find('.post-text').val(textPostOrigin);
+            }
+            else { // if update comment was canceled
+                let $clickedComment = $(event.currentTarget).closest('.comment');
+                $clickedComment.find('.edit-comment-form').toggleClass('show');
+            }
         });
-      }
+    }
 }
 
 export default EventsHandler

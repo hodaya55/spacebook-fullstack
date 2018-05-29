@@ -30,7 +30,7 @@ app.get('/posts', (req, res) => {
   Post.find(function (error, posts) {
     if (error)
       // return console.error(error);
-      throw err;
+      throw error;
     console.log(posts); //log here in the console all the posts
     res.send(posts);
   });
