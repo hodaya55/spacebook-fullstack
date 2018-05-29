@@ -5,6 +5,9 @@ class EventsHandler {
         this.$posts = $(".posts");
     }
 
+    /*=====================================================
+    add / remove post
+    =======================================================*/
     registerAddPost() {
         $('#addpost').on('click keyup', (event) => {
             console.log('in registerAddPost event:');
@@ -14,12 +17,12 @@ class EventsHandler {
                 let $input = $("#postText");
                 if ($input.val() === "") {
                     alert("Please enter text!");
-                } else {
+                }
+                else {
                     this.postsRepository.addPost($input.val()).then(() => {
                         this.postsRenderer.renderPosts(this.postsRepository.posts);
                         $input.val("");
-                    });
-
+                    }).catch(() => { console.log('catch- error in adding post function'); });
                 }
             }
         });
@@ -40,6 +43,9 @@ class EventsHandler {
 
     }
 
+    /*=====================================================
+    add / remove /show comments
+    =======================================================*/
     registerToggleComments() {
         this.$posts.on('click', '.toggle-comments', (event) => {
             let $clickedPost = $(event.currentTarget).closest('.post');
@@ -59,14 +65,18 @@ class EventsHandler {
                 return;
             }
 
+            let d = new Date();
+
             let postIndex = $(event.currentTarget).closest('.post').index();
-            let newComment = { text: $comment.val(), user: $user.val() };
+            let newComment = { text: $comment.val(), createDate: d.getTime(), user: $user.val() };
+
+            console.log(newComment);
 
             this.postsRepository.addComment(newComment, postIndex).then(() => {
                 this.postsRenderer.renderComments(this.postsRepository.posts, postIndex);
                 $comment.val("");
                 $user.val("");
-            });
+            }).catch(() => { console.log('catch- error in adding comment function'); });
         });
 
     }
@@ -82,6 +92,59 @@ class EventsHandler {
             });
         });
     }
+
+    /*=====================================================
+    optional
+    =======================================================*/
+
+    registerToggleUpdatePost() {
+        this.$posts.on('click', '.edit-post-icon', (event) => {
+          let $clickedPost = $(event.currentTarget).closest('.post');
+          let textPost = $clickedPost.find('.post-text').text();
+          $clickedPost.find('.comments-container').removeClass('show');
+          $clickedPost.find('.edit-post-form').toggleClass('show');
+        //   $clickedPost.find('#edit-post-input').val(textPost);
+          $clickedPost.find('.post-text').prop("disabled", false);
+        //   document.getElementById('elementId').removeAttribute('disabled');
+        });
+      }
+
+      /*=====================================================
+      לתקן שאחרי קנסל זה לא ישמור !! זה שומר בכל זאת...
+      =======================================================*/
+
+      registerUpdatePostText() {
+        this.$posts.on('click', '#editPostButton', (event) => {
+            console.log('in editpostbutton event click');
+
+          let postIndex = $(event.currentTarget).closest('.post').index();
+          let $clickedPost = $(event.currentTarget).closest('.post');
+          let inputText = $clickedPost.find('.post-text').val();
+
+          if (inputText === '') {
+            alert('Please enter text for the post!');
+            return;
+          }
+          else {
+            this.postsRepository.updatePost(postIndex, inputText).then(() => {
+              this.postsRenderer.renderPosts(this.postsRepository.posts);
+            }).catch(() => { console.log('catch- error in update post-text function');});
+          }
+        });
+      }
+
+      registerCancelUpdates() {
+        this.$posts.on('click', '#cancelEditPost, #cancelEditComment', (event) => {
+          let $clickedPost = $(event.currentTarget).closest('.post');
+          // if update post was canceled
+          if ($(event.currentTarget)[0].id == 'cancelEditPost') {
+            $clickedPost.find('.edit-post-form').toggleClass('show');
+          } else { // if update comment was canceled
+            let $clickedComment = $(event.currentTarget).closest('.comment');
+            $clickedComment.find('.edit-comment-form').toggleClass('show');
+          }
+        });
+      }
 }
 
 export default EventsHandler

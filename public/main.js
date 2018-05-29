@@ -12,7 +12,13 @@ eventsHandler.registerToggleComments();
 eventsHandler.registerAddComment();
 eventsHandler.registerRemoveComment();
 
-//request the new server route (/posts).
+eventsHandler.registerToggleUpdatePost();
+// eventsHandler.registerToggleUpdateComment();
+eventsHandler.registerCancelUpdates();
+eventsHandler.registerUpdatePostText();
+// eventsHandler.registerUpdateCommentText();
+
+//request all the posts from the DB
 //in the success handler- populate the posts array and then use it to render the view
 var getPosts = function () {
   $.ajax({

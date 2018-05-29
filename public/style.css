@@ -1,5 +1,18 @@
+body {
+    background-color: #d9e0e6;
+}
+
 .post {
-    padding: 20px 0;
+    padding: 25px;
+    box-shadow: 0 0 4px black;
+    margin-bottom: 16px;
+    border-radius: 10px;
+    background-color: #5f9ea0b8;
+}
+
+.toggle-comments {
+    /* display: block; */
+    color: white;
 }
 
 .btn-sm {
@@ -10,6 +23,79 @@
     margin: 5px 0 5px 10px;
 }
 
+.post-text{
+    width:100%;
+}
+
+#postText {
+    min-height: 120px;
+    min-width: 456px;
+    max-width: 670px;
+    height: 120px;
+    margin: 0px 1.99653px 0px 0px;
+    /* width: 671px; */
+}
+
+.post .edit-post-icon {
+    color: #14b16d;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.edit-post-form,
+.edit-comment-form {
+    display: none;
+}
+
+/*comment*/
+
 .comments-container {
     display: none;
+}
+
+.comment,
+.post-line {
+    display: flex;
+    justify-content: space-between;
+}
+
+.panel {
+    position: relative;
+}
+
+.panel>.panel-heading:after,
+.panel>.panel-heading:before {
+    position: absolute;
+    top: 11px;
+    left: -16px;
+    right: 100%;
+    width: 0;
+    height: 0;
+    display: block;
+    content: " ";
+    border-color: transparent;
+    border-style: solid solid outset;
+    pointer-events: none;
+}
+
+.panel>.panel-heading:after {
+    border-width: 7px;
+    border-right-color: #f7f7f7;
+    margin-top: 1px;
+    margin-left: 2px;
+}
+
+.panel>.panel-heading:before {
+    border-right-color: #ddd;
+    border-width: 8px;
+}
+
+.comments-list{
+    margin-top: 10px;
+}
+
+.fa-trash {
+    font-size: 20px;
+    color: red;
+    cursor: pointer;
 }

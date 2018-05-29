@@ -17,6 +17,7 @@ class PostsRepository {
                 console.log("postText: " + postText);
                 // adding the post to posts array
                 this.posts.push(newPost);
+                // this.posts.unshift(newPost);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
@@ -52,15 +53,16 @@ class PostsRepository {
             success: (updatedPost) => {
                 console.log("updatedPost: ");
                 console.log(updatedPost);
+                console.log("newComment: ");
+                console.log(newComment);
+
                 // adding the comment to posts array
-                this.posts[postIndex].comments.push(updatedPost.comments[updatedPost.comments.length - 1]);
+                if (updatedPost.comments.length == 0)
+                    this.posts[postIndex].comments.push(updatedPost.comments[0]);
+                else
+                    this.posts[postIndex].comments.push(updatedPost.comments[updatedPost.comments.length - 1]);
+                // this.posts[postIndex].comments.unshift(updatedPost.comments[updatedPost.comments.length - 1]);
             },
-            // success: (newCommentDB) => {
-            //     console.log("newCommentDB: ");
-            //     console.log(newCommentDB);
-            //     // adding the comment to posts array
-            //     this.posts[postIndex].comments.push(newCommentDB);
-            // },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
             }
@@ -81,6 +83,25 @@ class PostsRepository {
                 console.log(result);
                 //deleting the comment from posts array
                 this.posts[postIndex].comments.splice(commentIndex, 1);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus);
+            }
+        });
+    };
+
+/*=====================================================
+optinal
+=======================================================*/
+    updatePost(index, postText) {
+        let postId = this.posts[index]._id;
+        return $.ajax({
+            method: 'PUT',
+            url: 'posts/' + postId,
+            data: { text: postText },
+            success: (updatedPost) => {
+                this.posts[index].text = postText;
+                console.log('edited successfully');
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);

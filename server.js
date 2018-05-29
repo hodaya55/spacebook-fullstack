@@ -20,12 +20,6 @@ app.use(express.static('node_modules'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-//*adding some dummy data to the "posts" collection in a database called "spacebookDB"*//
-// var post_1= new Post({text:'my first post!', comments:[{text:"comment 1 !", user:"hodaya"}]});
-// post_1.save();
-// var post_2= new Post({text:'my second post!', comments:[{text:"comment 1 !!", user:"roni"}, {text:"comment 2 !!", user:"adi"}]});
-// post_2.save();
-
 
 // we created 5 server routes
 // These define our API:
@@ -69,22 +63,9 @@ app.delete('/posts/:id', (req, res) => {
 app.post('/posts/:idPost/comments', (req, res) => {
   Post.findByIdAndUpdate(req.params.idPost, { $push: { comments: req.body } }, { new: true }, (err, updatedPost) => {
     if (err)
-      // return console.error(err);
       throw err;
     res.send(updatedPost);
   });
-
-  // Post.findById(req.params.idPost, (err, postDoc) => {
-  //   console.log(req.body);
-
-  //   postDoc.comments.push(req.body);
-  //   postDoc.save(function (err, data) {
-  //     if (err)
-  //     return console.error(err);
-  //     console.log(data);
-  //     res.send(data);
-  //   })
-  // });
 });
 
 // 5) to handle deleting a comment from a post
@@ -96,7 +77,20 @@ app.delete('/posts/:idPost/comments/:idComment', (req, res) => {
   });
 });
 
-
+/*=====================================================
+optional
+=======================================================*/
+// 6)  to handle editing a post
+app.put('/posts/:postId', (req, res) => {
+  var id = req.params.postId;
+  // update the text of post in the DB collection
+  Post.findByIdAndUpdate(id, { $set: { text: req.body.text } }, { new: true }, (err, updatedPost) => {
+    if (err)
+      throw err;
+    console.log(updatedPost);
+    res.send(updatedPost);
+  });
+});
 
 
 app.listen(SERVER_PORT, () => {

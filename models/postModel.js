@@ -6,7 +6,8 @@ var mongoose = require('mongoose');
 
 let commentSchema = new mongoose.Schema({
 text: String,
-user: String
+user: String,
+createDate: String  // maybe instead do this - i will put the date in the array in ajax in succsess handler
 });
 
 
