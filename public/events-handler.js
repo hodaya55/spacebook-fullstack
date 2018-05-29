@@ -103,15 +103,20 @@ class EventsHandler {
         this.$posts.on('click', '.edit-post-icon', (event) => {
             let $clickedPost = $(event.currentTarget).closest('.post');
             let textPost = $clickedPost.find('.post-text').text();
+            $clickedPost.find('#textareaedit').val(textPost);
             $clickedPost.find('.comments-container').removeClass('show');
             $clickedPost.find('.edit-post-form').toggleClass('show');
-            $clickedPost.find('.post-text').val(textPost);
             textPostOrigin = textPost; //save the original post text, in case user cancel his edit
-            $clickedPost.find('.post-text').toggleClass('white');
-            if ($clickedPost.find('.post-text').hasClass('white'))
-                $clickedPost.find('.post-text').prop("disabled", false);
-            else
-                $clickedPost.find('.post-text').prop("disabled", true);
+
+            if ($clickedPost.find('#textareaedit').hasClass('show')) {
+                $clickedPost.find('#textareaedit').removeClass('show');
+                $clickedPost.find('.post-text').addClass('show');
+            }
+            else {
+                $clickedPost.find('.post-text').removeClass('show');
+                $clickedPost.find('#textareaedit').addClass('show');
+            }
+
         });
     }
 
@@ -121,8 +126,7 @@ class EventsHandler {
             console.log('in editpostbutton event click');
             let postIndex = $(event.currentTarget).closest('.post').index();
             let $clickedPost = $(event.currentTarget).closest('.post');
-            let inputText = $clickedPost.find('.post-text').val();
-
+            let inputText = $clickedPost.find('#textareaedit').val();
 
             if (inputText === '') {
                 alert('Please enter text for the post!');
@@ -130,7 +134,8 @@ class EventsHandler {
             }
             else {
                 this.postsRepository.updatePost(postIndex, inputText).then(() => {
-                    $clickedPost.find('.post-text').prop("disabled", true);
+                    $clickedPost.find('#textareaedit').removeClass('show');;
+                    $clickedPost.find('.post-text').addClass('show');
 
                     this.postsRenderer.renderPosts(this.postsRepository.posts);
                 }).catch(() => { console.log('catch- error in update post-text function'); });
@@ -146,9 +151,10 @@ class EventsHandler {
                 console.log('in cancel edit post');
                 $clickedPost.find('.edit-post-form').toggleClass('show');
                 $clickedPost.find('.post-text').val(textPostOrigin);
-                $clickedPost.find('.post-text').prop("disabled", true);
-                $clickedPost.find('.post-text').toggleClass('white');
 
+                // its work
+                $clickedPost.find('#textareaedit').removeClass('show');;
+                $clickedPost.find('.post-text').addClass('show');
             }
             else { // if update comment was canceled
                 let $clickedComment = $(event.currentTarget).closest('.comment');

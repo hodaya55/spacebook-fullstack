@@ -25,15 +25,7 @@ body {
 
 .post-text{
     width:100%;
-    background-color: rgb(129, 176, 179);
-    padding: 0px;
-    border: 0px;
-}
-
-.white{
-    background-color:white;
-    padding: 2px;
-    border: 0.7px;
+    display: none;
 }
 
 .icons{
@@ -65,8 +57,12 @@ body {
     margin-left: 10px;
 }
 
+#textareaedit{
+    width: 100%;
+}
+
 /*comment*/
-.comments-container {
+.comments-container, #textareaedit {
     display: none;
 }
 
