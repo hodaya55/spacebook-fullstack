@@ -25,6 +25,19 @@ body {
 
 .post-text{
     width:100%;
+    background-color: rgb(129, 176, 179);
+    padding: 0px;
+    border: 0px;
+}
+
+.white{
+    background-color:white;
+    padding: 2px;
+    border: 0.7px;
+}
+
+.icons{
+    margin-left: 10px;
 }
 
 #postText {
@@ -33,9 +46,13 @@ body {
     max-width: 670px;
     height: 120px;
     margin: 0px 1.99653px 0px 0px;
+    border-radius: 16px;
     /* width: 671px; */
 }
 
+#addpost{
+    margin-top: 10px;
+}
 .post .edit-post-icon {
     color: #14b16d;
     font-size: 20px;
@@ -45,10 +62,10 @@ body {
 .edit-post-form,
 .edit-comment-form {
     display: none;
+    margin-left: 10px;
 }
 
 /*comment*/
-
 .comments-container {
     display: none;
 }
