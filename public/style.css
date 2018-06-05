@@ -26,6 +26,7 @@ body {
 .post-text{
     width:100%;
     display: none;
+    white-space: pre;
 }
 
 .icons{
