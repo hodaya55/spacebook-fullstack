@@ -106,15 +106,14 @@ class EventsHandler {
             $clickedPost.find('#textareaedit').val(textPost);
             $clickedPost.find('.comments-container').removeClass('show');
             $clickedPost.find('.edit-post-form').toggleClass('show');
-            textPostOrigin = textPost; //save the original post text, in case user cancel his edit
 
-            if ($clickedPost.find('#textareaedit').hasClass('show')) {
-                $clickedPost.find('#textareaedit').removeClass('show');
-                $clickedPost.find('.post-text').addClass('show');
+            if ($clickedPost.find('.post-text').hasClass('hide')) {
+                $clickedPost.find('.post-text').removeClass('hide');
+                $clickedPost.find('#textareaedit').addClass('hide');
             }
             else {
-                $clickedPost.find('.post-text').removeClass('show');
-                $clickedPost.find('#textareaedit').addClass('show');
+                $clickedPost.find('.post-text').addClass('hide');
+                $clickedPost.find('#textareaedit').removeClass('hide');
             }
 
         });
@@ -134,8 +133,8 @@ class EventsHandler {
             }
             else {
                 this.postsRepository.updatePost(postIndex, inputText).then(() => {
-                    $clickedPost.find('#textareaedit').removeClass('show');;
-                    $clickedPost.find('.post-text').addClass('show');
+                    $clickedPost.find('#textareaedit').addClass('hide');
+                    $clickedPost.find('.post-text').removeClass('hide');
 
                     this.postsRenderer.renderPosts(this.postsRepository.posts);
                 }).catch(() => { console.log('catch- error in update post-text function'); });
@@ -146,15 +145,16 @@ class EventsHandler {
     registerCancelUpdates() {
         this.$posts.on('click', '#cancelEditPost, #cancelEditComment', (event) => {
             let $clickedPost = $(event.currentTarget).closest('.post');
+            let textPost = $clickedPost.find('.post-text').text();
             // if update post was canceled
             if ($(event.currentTarget)[0].id == 'cancelEditPost') {
                 console.log('in cancel edit post');
                 $clickedPost.find('.edit-post-form').toggleClass('show');
-                $clickedPost.find('.post-text').val(textPostOrigin);
+                // set the original post text, in case user cancel his edit
+                $clickedPost.find('.post-text').val(textPost);
 
-                // its work
-                $clickedPost.find('#textareaedit').removeClass('show');;
-                $clickedPost.find('.post-text').addClass('show');
+                $clickedPost.find('#textareaedit').addClass('hide');;
+                $clickedPost.find('.post-text').removeClass('hide');
             }
             else { // if update comment was canceled
                 let $clickedComment = $(event.currentTarget).closest('.comment');

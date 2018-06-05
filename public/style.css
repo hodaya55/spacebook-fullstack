@@ -25,7 +25,7 @@ body {
 
 .post-text{
     width:100%;
-    display: none;
+    /* display: none; */
     white-space: pre;
 }
 
@@ -63,7 +63,8 @@ body {
 }
 
 /*comment*/
-.comments-container, #textareaedit {
+.comments-container
+{
     display: none;
 }
 
