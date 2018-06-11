@@ -12,7 +12,7 @@ class PostsRepository {
     getPosts() {
       return  $.ajax({
             method: 'GET',
-            url: '/posts',
+            url: 'posts',
             dataType: 'json',
             success: (posts)=> {
                 console.log('in getPosts, posts-array:');
