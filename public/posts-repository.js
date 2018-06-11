@@ -10,7 +10,7 @@ class PostsRepository {
     //request all the posts from the DB
     //in the success handler- populate the posts array and then use it to render the view
     getPosts() {
-        $.ajax({
+      return  $.ajax({
             method: 'get',
             url: '/posts',
             dataType: 'json',
