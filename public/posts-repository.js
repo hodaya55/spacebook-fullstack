@@ -6,6 +6,28 @@ class PostsRepository {
         this.posts = [];
     }
 
+
+    //request all the posts from the DB
+    //in the success handler- populate the posts array and then use it to render the view
+    getPosts() {
+        $.ajax({
+            method: 'get',
+            url: '/posts',
+            dataType: 'json',
+            success: function (posts) {
+                console.log('in getPosts, posts-array:');
+                console.log(posts);
+                // add the posts and the comments to array
+                postsRepository.posts = posts;
+                // render all posts and comments on the page
+                postsRenderer.renderPosts(postsRepository.posts);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus);
+            }
+        });
+    }
+
     addPost(postText) {
         console.log('in AddPost:');
         return $.ajax({
@@ -90,9 +112,9 @@ class PostsRepository {
         });
     };
 
-/*=====================================================
-optinal
-=======================================================*/
+    /*=====================================================
+    optinal
+    =======================================================*/
     updatePost(index, postText) {
         let postId = this.posts[index]._id;
         return $.ajax({

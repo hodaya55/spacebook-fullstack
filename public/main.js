@@ -18,28 +18,11 @@ eventsHandler.registerCancelUpdates();
 eventsHandler.registerUpdatePostText();
 // eventsHandler.registerUpdateCommentText();
 
-//request all the posts from the DB
-//in the success handler- populate the posts array and then use it to render the view
-var getPosts = function () {
-  $.ajax({
-    method: 'get',
-    url: '/posts',
-    dataType: 'json',
-    success: function (posts) {
-      console.log('in getPosts, posts-array:');
-      console.log(posts);
-      // add the posts and the comments to array
-      postsRepository.posts = posts;
-      // render all posts and comments on the page
-      postsRenderer.renderPosts(postsRepository.posts);
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(textStatus);
-    }
-  });
-}
+
 
 //invoke this client-side function when the app loads
 //in order to display all posts as soon as page loads
-getPosts();
-
+postsRepository.getPosts().then(() => {
+  // render all posts and comments on the page
+  postsRenderer.renderPosts(postsRepository.posts);
+});

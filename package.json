@@ -8,10 +8,15 @@
     "start": "node server.js"
   },
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "git+https://github.com/swinston1000/spacebook-c2.git"
   },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/swinston1000/spacebook-c2/issues"
+  },
+  "homepage": "https://github.com/swinston1000/spacebook-c2#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
     "bootstrap": "^3.3.7",
