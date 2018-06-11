@@ -11,7 +11,7 @@ class PostsRepository {
     //in the success handler- populate the posts array and then use it to render the view
     getPosts() {
       return  $.ajax({
-            method: 'get',
+            method: 'GET',
             url: '/posts',
             dataType: 'json',
             success: (posts)=> {
@@ -29,7 +29,7 @@ class PostsRepository {
     addPost(postText) {
         console.log('in AddPost:');
         return $.ajax({
-            method: 'post',
+            method: 'POST',
             url: '/posts',
             data: { text: postText, comments: [] },
             //After a new post has been created in the DB it should be returned to the client
