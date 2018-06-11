@@ -7,11 +7,14 @@ var mongoose = require('mongoose');
 //   console.log("DB connection established!!!");
 // })
 
-// connect to DB and check the connection
-let myConnection = process.env.CONNECTION_STRING || 'mongodb://localhost/spacebookDB'
-mongoose.connect(myConnection, { useMongoClient: true })
-  .then(() => {console.log('Successfully connected to mongoDB');})
-  .catch((error) => console.error(error));
+mongoose.connect('mongodb://localhost/spacebookDB', { useMongoClient: true }, function () {
+  console.log("DB connection established!!!");
+})
+
+// let myConnection = process.env.CONNECTION_STRING || 'mongodb://localhost/spacebookDB'
+// mongoose.connect(myConnection, { useMongoClient: true })
+//   .then(() => {console.log('Successfully connected to mongoDB');})
+//   .catch((error) => console.error(error));
 
 var Post = require('./models/postModel');
 
