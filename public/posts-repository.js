@@ -14,13 +14,11 @@ class PostsRepository {
             method: 'get',
             url: '/posts',
             dataType: 'json',
-            success: function (posts) {
+            success: (posts)=> {
                 console.log('in getPosts, posts-array:');
                 console.log(posts);
                 // add the posts and the comments to array
-                postsRepository.posts = posts;
-                // render all posts and comments on the page
-                postsRenderer.renderPosts(postsRepository.posts);
+                this.posts = posts;
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
